@@ -2,6 +2,7 @@
 import React, { useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
+import { login } from "./services/auth";
 
 export default function LoginPage() {
   const [email, setEmail] = useState("");
@@ -12,26 +13,18 @@ export default function LoginPage() {
     e.preventDefault();
     setErrorMsg("");
     try {
-      const res = await fetch(
-        `${process.env.NEXT_PUBLIC_API_URL}/api/auth/login`,
-        {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ email, password }),
-        },
-      );
-      const data = await res.json();
-      if ((res.ok && data.code === 200) || data.result) {
+      const data = await login(email, password);
+      if (data.code === 200 || data.result) {
         alert("ok");
+        if (data.result && data.result.token) {
+          localStorage.setItem('accessToken', data.result.token);
+        }
       } else {
         setErrorMsg(data.message || "Login failed");
-      console.log(email);
-      console.log(password);
       }
-    } catch (err: unknown) {
+    } catch (err: any) {
       console.error(err);
-      setErrorMsg("Connection error");
-      
+      setErrorMsg(err.response?.data?.message || err.message || "Connection error");
     }
   };
   return (

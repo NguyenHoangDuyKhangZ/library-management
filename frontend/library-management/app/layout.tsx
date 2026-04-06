@@ -1,6 +1,8 @@
 import type { Metadata } from "next";
 import { Montserrat } from "next/font/google";
 import "./globals.css";
+import { StoreProvider } from "@/context/store_context";
+import { AOSInit } from "@/components/aos-init";
 
 const montserrat = Montserrat({
   variable: "--font-montserrat",
@@ -22,7 +24,14 @@ export default function RootLayout({
       lang="en"
       className={`${montserrat.variable}  h-full antialiased`}
     >
-      <body className="min-h-full flex flex-col">{children}</body>
+    <head ><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />   
+    </head>  
+      <body className="min-h-full flex flex-col">
+        <StoreProvider>
+          <AOSInit />
+          {children}
+        </StoreProvider>
+      </body>
     </html>
   );
 }

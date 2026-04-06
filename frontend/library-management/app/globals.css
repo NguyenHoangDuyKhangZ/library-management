@@ -1,26 +1,65 @@
 @import "tailwindcss";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
+@theme {
+  --font-headline: "Manrope", sans-serif;
+  --font-body: "Manrope", sans-serif;
+  --font-label: "Manrope", sans-serif;
+
+
+  --color-primary: #DC2626;
+  --color-on-primary: #ffffff;
+  --color-primary-container: #FEE2E2;
+  --color-on-primary-container: #991B1B;
+  
+  --color-surface: #FAFAFA;
+  --color-on-surface: #111827;
+  --color-surface-variant: #F3F4F6;
+  --color-on-surface-variant: #4B5563;
+  
+  --color-outline: #D1D5DB;
+  --color-outline-variant: #E5E7EB;
+  
+  --color-error: #DC2626;
+  --color-error-container: #FEE2E2;
+  --color-on-error-container: #991B1B;
+  
+  --color-background: #FFFFFF;
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-montserrat);
-  --font-mono: var(--font-geist-mono);
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
-}
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: montserrat;
+  background-color: var(--color-background);
+  color: var(--color-on-surface);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.scrollbar-hidden {
+  scrollbar-width: none;       
+  -ms-overflow-style: none;    
+}
+@layer utilities {
+  .glass-effect {
+    background: rgba(255, 255, 255, 0.7);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+  }
+  
+  .book-card-shadow {
+    box-shadow: 0 4px 20px -2px rgba(0, 0, 0, 0.05);
+  }
+  
+  .vibrant-gradient-bg, .bg-red-gradient {
+    background: linear-gradient(135deg, #DC2626 0%, #991B1B 100%);
+  }
+  
+  .hover-bg-red-gradient:hover {
+    background: linear-gradient(135deg, #EF4444 0%, #B91C1C 100%);
+  }
+  
+  .vibrant-gradient-text {
+    background: linear-gradient(135deg, #ef4444 0%, #b91c1c 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
 }
