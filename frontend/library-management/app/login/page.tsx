@@ -3,6 +3,7 @@ import React, { useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { login } from "./services/auth";
+import { stringify } from "node:querystring";
 
 export default function LoginPage() {
   const [email, setEmail] = useState("");
@@ -16,8 +17,10 @@ export default function LoginPage() {
       const data = await login(email, password);
       if (data.code === 200 || data.result) {
         alert("ok");
-        if (data.result && data.result.token) {
-          localStorage.setItem('accessToken', data.result.token);
+        console.log(data);
+        if (data.result && data.result.accessToken) {
+          localStorage.setItem('accessToken', data.result.accessToken);
+          window.location.href = "/catalog";
         }
       } else {
         setErrorMsg(data.message || "Login failed");
@@ -81,7 +84,7 @@ export default function LoginPage() {
             {/* This represents the interior archieve bookshelf image from the design */}
             <div className="absolute inset-0 rounded-xl bg-[#E2E8F0] overflow-hidden shadow-inner flex items-center justify-center text-[#475569] text-sm">
               <div className="absolute inset-0 bg-gradient-to-br from-[#D1D5DB] to-[#9CA3AF] flex items-center justify-center text-[#475569] text-sm">
-                <Image src="/login-theme.jpeg" alt="Login Image" width={600} height={600}  />
+                <Image src="/login-theme.jpeg" alt="Login Image" width={600} height={600} />
               </div>
             </div>
           </div>
